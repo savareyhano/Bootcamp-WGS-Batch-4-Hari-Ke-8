@@ -67,9 +67,29 @@ function getName(name) {
 function del(name) {
     const contacts = JSON.parse(read);
     const fil = contacts.filter((contact) => contact.name !== name);
-    console.log(fil)
     fs.writeFileSync('data/contacts.json', JSON.stringify(fil));
-    console.log('Data pada file selain data diatas sudah terhapus!');
 }
 
-module.exports = { save, show, getName, del };
+function up(name, email, phone, where) {
+    const file = fs.readFileSync('data/contacts.json', 'utf-8');
+    const contacts = JSON.parse(file);
+    const fil = contacts.find((contacts) => contacts.name === where);
+    // console.log(fil);
+    del(name)
+    // contacts.push(fil)
+    // const contact = fil
+    // contacts.push(contact);
+    if (name !== undefined) {
+        fil.name = name
+    }
+    if (email !== undefined) {
+        fil.email = email
+    }
+    if (phone !== undefined) {
+        fil.phone = phone
+    }
+    fs.writeFileSync('data/contacts.json', JSON.stringify(contacts));
+    // console.log('Terimakasih sudah memasukkan data!');
+}
+
+module.exports = { save, show, getName, del, up };
